@@ -1,21 +1,17 @@
 {
-  "name": "portfolio",
+  "name": "portfolio-monorepo",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "pnpm --parallel --filter \"@portfolio/*\" dev",
+    "dev:web": "pnpm --filter @portfolio/web dev",
+    "dev:api": "pnpm --filter @portfolio/api dev",
+    "build": "pnpm --recursive build",
+    "db:generate": "pnpm --filter @portfolio/db db:generate",
+    "db:push": "pnpm --filter @portfolio/db db:push",
+    "db:migrate": "pnpm --filter @portfolio/db db:migrate",
+    "db:studio": "pnpm --filter @portfolio/db db:studio"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "12.6.0",
-      "onFail": "download"
-    }
-  },
-  "packageManager": "pnpm@12.6.0",
-  "type": "module"
+  "packageManager": "pnpm@12.6.0"
 }
