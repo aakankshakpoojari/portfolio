@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #f1f7f3;
+  --foreground: #021a0d;
 }
 
 body {
-  background-color: #f8fafc;
+  background-color: #f1f7f3;
   color: var(--foreground);
   min-height: 100vh;
   margin: 0;
@@ -14,13 +14,13 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Diagonal pinstripe background matching the signature design */
+/* Diagonal pinstripe background matching the signature light green aesthetic */
 .bg-striped-pattern {
-  background-color: #f8fbff;
+  background-color: #f2f8f4;
   background-image: repeating-linear-gradient(
     45deg,
-    #d9e6f6 0px,
-    #d9e6f6 1.2px,
+    #d1e6d8 0px,
+    #d1e6d8 1.2px,
     transparent 1.2px,
     transparent 14px
   );

@@ -6,10 +6,34 @@ import { motion, AnimatePresence } from "framer-motion";
 type CatState = "walking" | "sitting" | "sleeping";
 
 export function CatOnFrame() {
+  const [isReady, setIsReady] = useState(false);
   const [catState, setCatState] = useState<CatState>("walking");
   const [stepCycle, setStepCycle] = useState(0);
 
   useEffect(() => {
+    const handleLoaded = () => {
+      // Small grace delay while the curtain slides up
+      setTimeout(() => {
+        setIsReady(true);
+      }, 200);
+    };
+
+    window.addEventListener("portfolio-loaded", handleLoaded);
+
+    // Fallback: If page was already loaded or event missed, start after 3s
+    const fallbackTimer = setTimeout(() => {
+      setIsReady(true);
+    }, 3200);
+
+    return () => {
+      window.removeEventListener("portfolio-loaded", handleLoaded);
+      clearTimeout(fallbackTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isReady) return;
+
     // Walking leg cycle
     const walkInterval = setInterval(() => {
       setStepCycle((prev) => (prev === 0 ? 1 : 0));
@@ -31,7 +55,11 @@ export function CatOnFrame() {
       clearTimeout(sitTimeout);
       clearTimeout(sleepTimeout);
     };
-  }, []);
+  }, [isReady]);
+
+  if (!isReady) {
+    return null;
+  }
 
   return (
     <div className="absolute -top-[44px] sm:-top-[50px] left-0 right-0 h-[60px] pointer-events-none z-20 overflow-visible">
