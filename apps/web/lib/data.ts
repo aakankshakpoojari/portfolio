@@ -1,4 +1,4 @@
-import { db, profile, education, experience, asc, type Education, type Experience } from "@portfolio/db";
+import { db, profile, education, experience, projects, skills, asc, desc, eq, type Education, type Experience, type Project, type Skill } from "@portfolio/db";
 
 export async function getProfile() {
   try {
@@ -121,4 +121,127 @@ export async function getExperience(): Promise<Experience[]> {
       updatedAt: new Date(),
     },
   ];
+}
+
+export async function getProjects(): Promise<Project[]> {
+  try {
+    const records = await db
+      .select()
+      .from(projects)
+      .orderBy(asc(projects.displayOrder), desc(projects.createdAt));
+    if (records.length > 0) {
+      return records;
+    }
+  } catch (error) {
+    console.error("Error fetching projects from database:", error);
+  }
+
+  // Fallback defaults
+  return [
+    {
+      id: "proj-1",
+      title: "PowerXchange",
+      slug: "powerxchange",
+      shortDescription: "Full-Stack Development, Web Application, Student Marketplace",
+      description: "A comprehensive student marketplace web application that allows students to exchange goods and services efficiently on campus.",
+      imageUrl: "/powerxchange.png",
+      githubUrl: "https://github.com/aakankshakpoojari",
+      liveUrl: null,
+      scope: "Full-Stack Development · Web Application · Student Marketplace",
+      contributors: "Aakanksha K Poojari, Atharva Joshi, Atmika Nayak",
+      year: 2026,
+      featured: true,
+      displayOrder: 1,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "proj-2",
+      title: "Unnathi",
+      slug: "unnathi",
+      shortDescription: "Full-Stack Development, Financial Literacy, Women-Centric Platform",
+      description: "A women-centric financial literacy platform aimed at providing resources, tools, and a community for women to manage and grow their wealth.",
+      imageUrl: "/unnathi.png",
+      githubUrl: "https://github.com/aakankshakpoojari",
+      liveUrl: null,
+      scope: "Full-Stack Development · Financial Literacy · Women-Centric Platform",
+      contributors: "Aakanksha K Poojari, Atmika Nayak, Shreya G Amin, Ishta P Jain",
+      year: 2026,
+      featured: true,
+      displayOrder: 2,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "proj-3",
+      title: "PublicEye",
+      slug: "publiceye",
+      shortDescription: "Full-Stack Development, Civic Technology, Issue Management",
+      description: "A civic technology platform designed to streamline issue management between citizens and local authorities, fostering better community engagement.",
+      imageUrl: "/publiceye.png",
+      githubUrl: "https://github.com/aakankshakpoojari",
+      liveUrl: null,
+      scope: "Full-Stack Development · Civic Technology · Issue Management",
+      contributors: "Aakanksha K Poojari, Atharva Joshi, Atmika Nayak, Adithya Karkera",
+      year: 2026,
+      featured: true,
+      displayOrder: 3,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: "proj-4",
+      title: "W3HIRE",
+      slug: "w3hire",
+      shortDescription: "Web3, Full-Stack Development, Decentralized Freelancing",
+      description: "A decentralized freelancing platform built on Web3 technologies, ensuring secure, transparent, and fee-minimized transactions between clients and freelancers.",
+      imageUrl: "/w3hire.png",
+      githubUrl: "https://github.com/aakankshakpoojari",
+      liveUrl: null,
+      scope: "Web3 · Full-Stack Development · Decentralized Freelancing",
+      contributors: "Atharva Joshi, Aditya Kumar Jha, Aakanksha K Poojari, Atmika Nayak, Adithya Karkera",
+      year: 2026,
+      featured: true,
+      displayOrder: 4,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }
+  ];
+}
+
+export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  try {
+    // First check db
+    const records = await db
+      .select()
+      .from(projects)
+      .where(eq(projects.slug, slug))
+      .limit(1);
+    if (records.length > 0) {
+      return records[0];
+    }
+  } catch (error) {
+    console.error("Error fetching project by slug:", error);
+  }
+
+  // Fallback defaults
+  const defaults = await getProjects();
+  return defaults.find((p) => p.slug === slug) || null;
+}
+
+export async function getSkills(): Promise<Skill[]> {
+  try {
+    const records = await db
+      .select()
+      .from(skills)
+      .orderBy(asc(skills.displayOrder));
+    if (records.length > 0) {
+      return records;
+    }
+  } catch (error) {
+    console.error("Error fetching skills from database:", error);
+  }
+
+  // Fallback
+  return [];
 }

@@ -14,6 +14,10 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 /* Diagonal pinstripe background matching the signature light green aesthetic */
 .bg-striped-pattern {
   background-color: #f2f8f4;
@@ -26,8 +30,43 @@ body {
   );
 }
 
+.bg-striped-pattern-dark {
+  background-color: #032306;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(229, 241, 232, 0.05) 0px,
+    rgba(229, 241, 232, 0.05) 1.2px,
+    transparent 1.2px,
+    transparent 14px
+  );
+}
+
 /* Display font styling for the prominent hero name */
 .hero-name-font {
   font-family: var(--font-display, "Plus Jakarta Sans"), system-ui, -apple-system, sans-serif;
   letter-spacing: -0.035em;
+}
+
+@keyframes inkFill {
+  0% {
+    background-position: 0 0%;
+  }
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+/* Name is invisible by default — ink fills from bottom to top on reveal */
+.ink-fill-text {
+  background: linear-gradient(to top, #032306 50%, transparent 50%);
+  background-size: 100% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-position: 0 0%;
+}
+
+.ink-fill-animate {
+  animation: inkFill 1.2s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+  animation-fill-mode: forwards;
 }

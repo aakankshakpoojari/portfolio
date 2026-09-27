@@ -42,10 +42,11 @@ export function AboutSection({
   return (
     <section
       id="about"
-      className="w-full max-w-7xl mx-auto px-6 sm:px-10 py-12 sm:py-20 relative z-10"
+      className="w-full min-h-screen flex flex-col justify-center relative z-10"
     >
+      <div className="w-full max-w-7xl mx-auto px-8 sm:px-10 py-16 sm:py-20">
       {/* Top clean divider line */}
-      <div className="w-full border-t border-[#032306]/20 mb-10 sm:mb-14" />
+      <div className="w-full border-t border-[#032306]/20 mb-8 sm:mb-10" />
 
       <AnimatePresence mode="wait">
         {!isExpanded ? (
@@ -362,6 +363,7 @@ export function AboutSection({
           </div>
         )}
       </AnimatePresence>
+      </div>
     </section>
   );
 }
