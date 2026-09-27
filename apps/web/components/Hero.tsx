@@ -98,7 +98,7 @@ export function Hero({ profileData }: HeroProps) {
             <CatOnFrame />
 
             {/* Profile Image Frame */}
-            <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden border-2 border-[#021a0d]/15 shadow-xl bg-[#e5f1e8] transition-all duration-300">
+            <div className="relative w-full aspect-[4/5] overflow-hidden border-[#021a0d]/15 shadow-xl bg-[#e5f1e8] transition-all duration-300">
               <Image
                 src={(profileImageUrl && profileImageUrl.length > 0) ? profileImageUrl : "/myimage.jpeg"}
                 alt={name || "Aakanksha K Poojari"}

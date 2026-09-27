@@ -69,7 +69,7 @@ export function AboutSection({
             {/* Thumbnail + Short paragraph + READ MORE */}
             <div className="flex flex-col md:flex-row items-start gap-8 lg:gap-12">
               {/* Left: Thumbnail Image */}
-              <div className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 rounded-2xl overflow-hidden border border-[#032306]/15 shadow-md bg-[#e5f1e8] shrink-0">
+              <div className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 overflow-hidden border border-[#032306]/15 shadow-md bg-[#e5f1e8] shrink-0">
                 <Image
                   src="/myimage.jpeg"
                   alt={name}
@@ -118,7 +118,7 @@ export function AboutSection({
           >
             {/* Left Column: Larger Image + Social Links */}
             <div className="lg:col-span-4 flex flex-col items-center lg:items-start space-y-6">
-              <div className="relative w-full max-w-[320px] sm:max-w-[360px] aspect-[4/5] rounded-3xl overflow-hidden border-2 border-[#032306]/15 shadow-xl bg-[#e5f1e8]">
+              <div className="relative w-full max-w-[320px] sm:max-w-[360px] aspect-[4/5] overflow-hidden border-[#032306]/15 shadow-xl bg-[#e5f1e8]">
                 <Image
                   src="/myimage.jpeg"
                   alt={name}

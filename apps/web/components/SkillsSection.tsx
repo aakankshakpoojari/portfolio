@@ -1,31 +1,32 @@
 "use client";
 
-import { WorksWheel } from "@/components/ui/works-wheel";
+import React from "react";
+import { WorksWheel, type WorksWheelItem } from "@/components/ui/works-wheel";
 
-const SKILL_CATEGORIES = [
+const SKILL_ITEMS: WorksWheelItem[] = [
   {
     title: "Languages",
-    image: "/skill-languages.jpg",
+    image: "/skill-card-languages.svg",
   },
   {
     title: "Frontend",
-    image: "/skill-frontend.jpg",
+    image: "/skill-card-frontend.svg",
   },
   {
     title: "Backend",
-    image: "/skill-backend.jpg",
+    image: "/skill-card-backend.svg",
   },
   {
     title: "Databases",
-    image: "/skill-databases.jpg",
+    image: "/skill-card-databases.svg",
   },
   {
     title: "Tools",
-    image: "/skill-tools.jpg",
+    image: "/skill-card-tools.svg",
   },
   {
     title: "Core Concepts",
-    image: "/skill-concepts.jpg",
+    image: "/skill-card-concepts.svg",
   },
 ];
 
@@ -33,35 +34,30 @@ export function SkillsSection() {
   return (
     <section
       id="skills"
-      className="w-full min-h-screen bg-striped-pattern flex flex-col relative z-10"
+      className="w-full min-h-screen bg-striped-pattern-dark text-[#e5f1e8] flex flex-col relative z-20 pt-14 pb-28 px-4 sm:px-6 md:px-12 overflow-visible"
     >
       {/* Section heading */}
-      <div className="w-full max-w-7xl mx-auto px-8 sm:px-10 pt-16 pb-4">
-        <div className="w-full border-t border-[#032306]/20 mb-8" />
-        <h2 className="hero-name-font text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#032306] tracking-tight">
+      <div className="w-full max-w-7xl mx-auto mb-6 text-center">
+        <div className="w-full border-t border-[#e5f1e8]/20 mb-8" />
+        <h2 className="hero-name-font text-5xl sm:text-6xl md:text-7xl font-extrabold text-[#f2f8f4] tracking-tight">
           Skills
         </h2>
-        <p className="mt-3 text-base sm:text-lg text-[#163e27]/80 font-medium">
-          Scroll or drag the wheel to explore
+        <p className="mt-3 text-base sm:text-lg text-[#86efac]/80 font-medium font-sans">
+          Scroll or drag the wheel to explore technologies
         </p>
       </div>
 
-      {/* Wheel — takes remaining height */}
-      <div className="flex-1 w-full" style={{ minHeight: "520px" }}>
+      {/* 21st.dev WorksWheel — full stage height with overflow-visible */}
+      <div className="w-full h-[88vh] min-h-[660px] relative overflow-visible">
         <WorksWheel
-          items={SKILL_CATEGORIES}
-          label="skills"
-          className="h-full w-full bg-transparent text-[#032306]"
-          style={
-            {
-              "--background": "#f2f8f4",
-              "--foreground": "#032306",
-              "--muted": "#e5f1e8",
-              "--muted-foreground": "#4a7a5e",
-            } as React.CSSProperties
-          }
+          items={SKILL_ITEMS}
+          label="Skills '26"
+          action="View"
+          className="h-full w-full bg-transparent text-[#f2f8f4]"
         />
       </div>
     </section>
   );
 }
+
+export default SkillsSection;
