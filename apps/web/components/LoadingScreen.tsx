@@ -36,6 +36,7 @@ export function LoadingScreen({ onLoaded }: LoadingScreenProps) {
             setTimeout(() => {
               setIsRemoved(true);
               document.body.style.overflow = "unset";
+              window.dispatchEvent(new CustomEvent("portfolio-screen-cleared"));
             }, 850);
           }, 250);
           return 100;

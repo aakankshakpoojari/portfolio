@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
+import { FirefliesBackground } from "@/components/FirefliesBackground";
 
 const displayFont = Plus_Jakarta_Sans({
   variable: "--font-display",
@@ -29,7 +30,10 @@ export default function RootLayout({
       lang="en"
       className={`${displayFont.variable} ${sansFont.variable} h-full antialiased`}
     >
-      <body className="min-h-full font-sans flex flex-col">{children}</body>
+      <body className="min-h-full font-sans flex flex-col relative">
+        <FirefliesBackground />
+        {children}
+      </body>
     </html>
   );
 }

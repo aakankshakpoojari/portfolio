@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { CatOnFrame } from "./CatOnFrame";
+import { CipherReveal } from "@/components/ui/cipher-reveal";
 import type { Profile } from "@portfolio/db";
 
 interface HeroProps {
@@ -16,16 +17,34 @@ interface HeroProps {
 
 export function Hero({ profileData }: HeroProps) {
   const { name, headline, bio, profileImageUrl } = profileData;
-  const [inkFilled, setInkFilled] = useState(false);
+  const [cipherStarted, setCipherStarted] = useState(false);
 
   useEffect(() => {
-    const handleLoaded = () => {
-      // Small delay so the loading screen starts sliding before the ink fills
-      setTimeout(() => setInkFilled(true), 200);
+    // Only trigger cipher decoding after the welcome screen has fully finished sliding away
+    const handleScreenCleared = () => {
+      // Short 120ms pause after screen rises so the user clearly sees the landing page before decode starts
+      setTimeout(() => setCipherStarted(true), 120);
     };
 
-    window.addEventListener("portfolio-loaded", handleLoaded);
-    return () => window.removeEventListener("portfolio-loaded", handleLoaded);
+    window.addEventListener("portfolio-screen-cleared", handleScreenCleared);
+
+    // If no loading screen exists on DOM (e.g. direct load, fast reload, or already removed)
+    const loadingScreen = typeof document !== 'undefined' ? document.querySelector('[aria-label="Loading portfolio"]') : null;
+    let fallbackTimer: NodeJS.Timeout | null = null;
+
+    if (!loadingScreen) {
+      setCipherStarted(true);
+    } else {
+      // 2400ms load duration + 250ms hold + 850ms exit slide + 200ms buffer = 3700ms
+      fallbackTimer = setTimeout(() => {
+        setCipherStarted(true);
+      }, 3700);
+    }
+
+    return () => {
+      window.removeEventListener("portfolio-screen-cleared", handleScreenCleared);
+      if (fallbackTimer) clearTimeout(fallbackTimer);
+    };
   }, []);
 
   // Ensure the longer tagline is displayed in the hero section and role is concise
@@ -43,12 +62,21 @@ export function Hero({ profileData }: HeroProps) {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-1 lg:gap-1 items-center px-12">
         {/* Left Column: Name, Tagline */}
         <div className="lg:col-span-7 flex flex-col justify-center space-y-1 sm:space-y-12">
-          {/* Name Header — Ink Fill Animation */}
+          {/* Name Header — Cipher Reveal Animation */}
           <div>
-            <h1
-              className={`hero-name-font text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-extrabold leading-[1.04] tracking-tight pb-3 ink-fill-text${inkFilled ? " ink-fill-animate" : ""}`}
-            >
-              {name || "Aakanksha K Poojari"}
+            <h1 className="hero-name-font text-5xl sm:text-6xl md:text-7xl lg:text-[5rem] font-extrabold leading-[1.04] tracking-tight pb-3">
+              <CipherReveal
+                text={name || "Aakanksha K Poojari"}
+                speed={80}
+                maxIterations={15}
+                sequential={true}
+                revealDirection="start"
+                characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+                trigger={cipherStarted}
+                animateOn="hover"
+                className="text-[#032306]"
+                encryptedClassName="text-[#155e37] opacity-85 font-mono tracking-tight"
+              />
             </h1>
           </div>
 

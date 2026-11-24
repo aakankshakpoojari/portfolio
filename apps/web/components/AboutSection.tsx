@@ -148,6 +148,7 @@ export function AboutSection({
                 >
                   GITHUB ↗
                 </a>
+                
                 <a
                   href="https://leetcode.com/aakankshakpoojari"
                   target="_blank"
@@ -155,6 +156,23 @@ export function AboutSection({
                   className="hover:text-[#185c34] hover:underline underline-offset-4 transition-colors"
                 >
                   LEETCODE ↗
+                </a>
+                <a
+                  href="https://codeforces.com/profile/aakankshakpoojari"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#185c34] hover:underline underline-offset-4 transition-colors"
+                >
+                  CODEFORCES ↗
+                </a>
+                
+                <a
+                  href="https://instagram.com/aakankshapoojari"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#185c34] hover:underline underline-offset-4 transition-colors"
+                >
+                  INSTAGRAM ↗
                 </a>
                 {resumeUrl ? (
                   <a
@@ -276,7 +294,7 @@ export function AboutSection({
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="bg-[#f2f8f4] border-2 border-[#032306] rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto"
+              className="bg-[#f2f8f4] border-2 border-[#032306] rounded-3xs p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative max-h-[90vh] overflow-y-auto"
             >
               {/* Close Button */}
               <button
