@@ -125,7 +125,7 @@ export function ConcaveCarousel({
   const dragStartX = useRef(0);
   const dragCurrentX = useRef(0);
   const dragDistance = useRef(0);
-  const lastWheelTime = useRef(0);
+  const snapTimer = useRef<NodeJS.Timeout | null>(null);
   const animationFrameId = useRef<number | null>(null);
 
   // Spring animation state for continuous smooth rotation
@@ -140,11 +140,12 @@ export function ConcaveCarousel({
       if (!active) return;
 
       const diff = targetPos.current - currentPos.current;
-      if (Math.abs(diff) > 0.001) {
+      if (Math.abs(diff) > 0.0002) {
         currentPos.current += diff * 0.14;
         setCurrentIndex(currentPos.current);
-      } else {
+      } else if (currentPos.current !== targetPos.current) {
         currentPos.current = targetPos.current;
+        setCurrentIndex(currentPos.current);
       }
 
       animationFrameId.current = requestAnimationFrame(loop);
@@ -155,6 +156,7 @@ export function ConcaveCarousel({
     return () => {
       active = false;
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
+      if (snapTimer.current) clearTimeout(snapTimer.current);
     };
   }, []);
 
@@ -174,28 +176,28 @@ export function ConcaveCarousel({
     goTo(Math.round(targetPos.current) + 1);
   }, [goTo]);
 
-  // Non-passive wheel event listener: stops page from scrolling down when cursor is over the carousel
+  // Non-passive wheel event listener: continuous fluid momentum scrolling without window scroll
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
 
     const onWheel = (e: WheelEvent) => {
-      // Prevent browser page from scrolling down/up
       e.preventDefault();
       e.stopPropagation();
 
-      const now = Date.now();
-      // Ignore tiny jitter
-      if (Math.abs(e.deltaY) < 8) return;
+      let delta = e.deltaY;
+      if (e.deltaMode === 1) delta *= 24;
+      else if (e.deltaMode === 2) delta *= 500;
 
-      if (now - lastWheelTime.current > 140) {
-        lastWheelTime.current = now;
-        if (e.deltaY > 0) {
-          next();
-        } else {
-          prev();
-        }
-      }
+      const impulse = delta * 0.0018;
+      targetPos.current += impulse;
+
+      if (snapTimer.current) clearTimeout(snapTimer.current);
+      snapTimer.current = setTimeout(() => {
+        const snapped = Math.round(targetPos.current);
+        targetPos.current = snapped;
+        setTargetIndex(snapped);
+      }, 150);
     };
 
     el.addEventListener('wheel', onWheel, { passive: false });
@@ -203,7 +205,7 @@ export function ConcaveCarousel({
     return () => {
       el.removeEventListener('wheel', onWheel);
     };
-  }, [next, prev]);
+  }, []);
 
   // Pointer drag interaction
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -346,6 +348,8 @@ export function ConcaveCarousel({
                   transformStyle: 'preserve-3d',
                   opacity: 1, // 100% solid opacity on all cards
                   zIndex: Math.round(100 - Math.abs(offset) * 10),
+                  willChange: 'transform',
+                  transition: 'none',
                 }}
               >
                 {/* Panel Card - 100% Solid Opacity with Floor Reflection */}

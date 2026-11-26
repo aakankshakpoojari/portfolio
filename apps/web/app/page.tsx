@@ -1,4 +1,4 @@
-import { getProfile, getEducation, getExperience, getProjects } from "@/lib/data";
+import { getProfile, getEducation, getExperience, getProjects, getSkills } from "@/lib/data";
 import { Navbar } from "@/components/Navbar";
 import { Hero } from "@/components/Hero";
 import { AboutSection } from "@/components/AboutSection";
@@ -10,11 +10,12 @@ import { SkillsSection } from "@/components/SkillsSection";
 export const revalidate = 0; // Dynamic rendering for live updates
 
 export default async function HomePage() {
-  const [profile, educationList, experienceList, projects] = await Promise.all([
+  const [profile, educationList, experienceList, projects, skillsList] = await Promise.all([
     getProfile(),
     getEducation(),
     getExperience(),
     getProjects(),
+    getSkills(),
   ]);
 
   // Smart role detection: concise role in navbar
@@ -55,8 +56,8 @@ export default async function HomePage() {
         {/* Projects Section */}
         <ProjectsSection projects={projects} />
 
-        {/* Skills Section */}
-        <SkillsSection />
+        {/* Skills Section with Album Rail */}
+        <SkillsSection skills={skillsList} />
 
         {/* Footer */}
         <footer className="w-full max-w-7xl mx-auto px-6 py-8 text-center text-xs text-[#2a6842] font-medium z-10 border-t border-[#032306]/10 mt-12">

@@ -242,6 +242,22 @@ export async function getSkills(): Promise<Skill[]> {
     console.error("Error fetching skills from database:", error);
   }
 
-  // Fallback
-  return [];
+  // Fallback defaults if database has not yet been seeded with skills
+  return [
+    { id: "1", name: "HTML5", category: "Frontend", icon: null, displayOrder: 1, createdAt: new Date(), updatedAt: new Date() },
+    { id: "2", name: "CSS3", category: "Frontend", icon: null, displayOrder: 2, createdAt: new Date(), updatedAt: new Date() },
+    { id: "3", name: "JavaScript", category: "Languages", icon: null, displayOrder: 3, createdAt: new Date(), updatedAt: new Date() },
+    { id: "4", name: "TypeScript", category: "Languages", icon: null, displayOrder: 4, createdAt: new Date(), updatedAt: new Date() },
+    { id: "5", name: "React", category: "Frontend", icon: null, displayOrder: 5, createdAt: new Date(), updatedAt: new Date() },
+    { id: "6", name: "Next.js", category: "Frontend", icon: null, displayOrder: 6, createdAt: new Date(), updatedAt: new Date() },
+    { id: "7", name: "Node.js", category: "Backend", icon: null, displayOrder: 7, createdAt: new Date(), updatedAt: new Date() },
+    { id: "8", name: "Express.js", category: "Backend", icon: null, displayOrder: 8, createdAt: new Date(), updatedAt: new Date() },
+    { id: "9", name: "Python", category: "Languages", icon: null, displayOrder: 9, createdAt: new Date(), updatedAt: new Date() },
+    { id: "10", name: "Java", category: "Languages", icon: null, displayOrder: 10, createdAt: new Date(), updatedAt: new Date() },
+    { id: "11", name: "PostgreSQL", category: "Databases", icon: null, displayOrder: 11, createdAt: new Date(), updatedAt: new Date() },
+    { id: "12", name: "MongoDB", category: "Databases", icon: null, displayOrder: 12, createdAt: new Date(), updatedAt: new Date() },
+    { id: "13", name: "Supabase", category: "Databases", icon: null, displayOrder: 13, createdAt: new Date(), updatedAt: new Date() },
+    { id: "14", name: "Git", category: "Tools", icon: null, displayOrder: 14, createdAt: new Date(), updatedAt: new Date() },
+    { id: "15", name: "Linux", category: "Tools", icon: null, displayOrder: 15, createdAt: new Date(), updatedAt: new Date() },
+  ];
 }
